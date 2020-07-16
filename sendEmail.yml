@@ -1,0 +1,33 @@
+packages:
+  sendEmail_package:
+    version: 1.0
+    license: Apache-2.0
+    actions:
+      sendEmail:
+        version: 1.0
+        description: sendEmail with SL_USER, SL_APIKEY
+        docker: openwhisk/dockerskeleton
+        function: sendEmail.sh
+        inputs:
+          SL_USER: $SL_USER
+                required: true
+          SL_APIKEY: $SL_APIKEY
+                required: true
+          TO: $TO
+                required: true
+          SUBJECT: 
+                default: "test subject"
+          BODY: 
+                default: "test body"
+
+    triggers:
+      every5minutes:
+        feed: /whisk.system/alarms/alarm
+        inputs:
+          cron: "*/5 * * * *"
+
+    rules:
+      sendEmail-every5minutes:
+        description: Action is triggered every 5 minutes
+        action: sendEmail
+        trigger: every5minutes
