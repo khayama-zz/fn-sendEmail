@@ -10,11 +10,8 @@ packages:
         function: sendEmail.sh
         inputs:
           SL_USER: $SL_USER
-                required: true
           SL_APIKEY: $SL_APIKEY
-                required: true
           TO: $TO
-                required: true
           SUBJECT: 
                 default: "test subject"
           BODY: 
