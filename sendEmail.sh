@@ -10,9 +10,11 @@ BODY=`echo "$ARGS" | jq -r '."BODY"'`
 SENDGRID_ID=`curl -u "$SL_USER:$SL_APIKEY" -X GET 'https://api.softlayer.com/rest/v3.1/SoftLayer_Account/getNetworkMessageDeliveryAccounts.json' | jq -r '.[]|.id'`
 
 curl -v -i -u "$SL_USER:$SL_APIKEY" \
--X POST "https://api.softlayer.com/rest/v3.1/SoftLayer_Network_Message_Delivery_Email_Sendgrid/$SENDGRID_ID/sendEmail.json" \
+-X POST \
 -H "Content-Type: application/json" \
--d '{"parameters": [{"body":"'$BODY'","from":"'$FROM'","to":"'$TO'","subject":"'$SUBJECT'"}]}' > /tmp/result.txt
+-d @- "https://api.softlayer.com/rest/v3.1/SoftLayer_Network_Message_Delivery_Email_Sendgrid/$SENDGRID_ID/sendEmail" > /tmp/result.txt << EOS
+{"parameters": [{"body":"$BODY","from":"$FROM","to":"$TO","subject":"$SUBJECT"}]}
+EOS
 
 if [ $? -ne 0 ]; then
   echo "ERROR" > /tmp/result.txt

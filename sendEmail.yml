@@ -13,11 +13,11 @@ packages:
           SL_APIKEY: $SL_APIKEY
           TO: $TO
           FROM: 
-                default: "no-reply@ibmfunctions.com"
+                default: no-reply@ibmfunctions.com
           SUBJECT: 
-                default: "test subject"
+                default: test subject
           BODY: 
-                default: "test body"
+                default: test body
 
     triggers:
       every5minutes:
