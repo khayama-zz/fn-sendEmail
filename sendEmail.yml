@@ -12,6 +12,8 @@ packages:
           SL_USER: $SL_USER
           SL_APIKEY: $SL_APIKEY
           TO: $TO
+          FROM: 
+                default: "no-reply@ibmfunctions.com"
           SUBJECT: 
                 default: "test subject"
           BODY: 
