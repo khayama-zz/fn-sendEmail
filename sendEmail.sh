@@ -7,7 +7,7 @@ FROM=`echo "$ARGS" | jq -r '."FROM"'`
 SUBJECT=`echo "$ARGS" | jq -r '."SUBJECT"'`
 BODY=`echo "$ARGS" | jq -r '."BODY"'`
 
-SENDGRID_ID=`curl -u "$SL_USER:$SL_APIKEY" -X GET 'https://api.softlayer.com/rest/v3.1/SoftLayer_Account/getNetworkMessageDeliveryAccounts.json' | jq -r '.[]|.id'`
+SENDGRID_ID=`curl -u "$SL_USER:$SL_APIKEY" -X GET 'https://api.softlayer.com/rest/v3.1/SoftLayer_Account/getNetworkMessageDeliveryAccounts.json?objectMask=mask[billingItem]' | jq -r '.[] | select (.billingItem.description=="Free Package") | .id'`
 
 curl -v -i -u "$SL_USER:$SL_APIKEY" \
 -X POST \
